@@ -1,106 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Rose Day for Mansi 🌹</title>
+<meta charset="UTF-8">
+<title>Rose Day for Mansi 🌹</title>
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #ff5f6d, #ffc371);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
-    }
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff5f6d, #ffc371);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+  }
 
-    .card {
-      background: rgba(255, 255, 255, 0.85);
-      padding: 30px 35px;
-      border-radius: 22px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      animation: pop 1.3s ease;
-      max-width: 320px;
-    }
+  .card {
+    background: rgba(255,255,255,0.88);
+    padding: 30px 35px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    animation: pop 1.3s ease;
+    max-width: 320px;
+    z-index: 2;
+  }
 
-    @keyframes pop {
-      0% { transform: scale(0); }
-      100% { transform: scale(1); }
-    }
+  @keyframes pop {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+  }
 
-    h1 {
-      margin-bottom: 10px;
-    }
+  h1 {
+    margin-bottom: 10px;
+  }
 
-    p {
-      font-size: 16px;
-      line-height: 1.5;
-    }
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
 
-    /* Falling petals */
-    .petal {
-      position: fixed;
-      top: -40px;
-      font-size: 22px;
-      animation-name: fall;
-      animation-timing-function: linear;
-      pointer-events: none;
-    }
+  /* Play music button */
+  #playBtn {
+    position: fixed;
+    bottom: 20px;
+    background: #ff4d6d;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 30px;
+    font-size: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 3;
+  }
 
-    @keyframes fall {
-      0% {
-        transform: translateX(0) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(120px) translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
+  /* Falling petals */
+  .petal {
+    position: fixed;
+    top: -40px;
+    font-size: 22px;
+    animation-name: fall;
+    animation-timing-function: linear;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  @keyframes fall {
+    0% {
+      transform: translateX(0) rotate(0deg);
+      opacity: 1;
     }
-  </style>
+    100% {
+      transform: translateX(120px) translateY(110vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+</style>
 </head>
 
 <body>
 
-  <div class="card">
-    <h1>🌹 Hey Mansi 😏</h1>
-    <p>
-      This rose is not dramatic,<br>
-      not filmy…<br><br>
-      Just a tiny reminder that<br>
-      you’re special 🌹🤍<br><br>
-      Now smile. Yes, you 😌
-    </p>
-  </div>
+<div class="card">
+  <h1>🌹 Hey Mansi 😏</h1>
+  <p>
+    This rose is not dramatic,<br>
+    not filmy…<br><br>
+    Just a tiny reminder that<br>
+    you’re special 🌹🤍<br><br>
+    Now smile. Yes, you 😌
+  </p>
+</div>
 
-  <!-- Background music -->
-  <audio autoplay loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
+<button id="playBtn">▶ Tap to Play Music</button>
 
-  <!-- Falling petals script -->
-  <script>
-    function createPetal() {
-      const petal = document.createElement("div");
-      petal.classList.add("petal");
-      petal.innerHTML = Math.random() > 0.5 ? "🌹" : "🤍";
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
-      petal.style.left = Math.random() * window.innerWidth + "px";
-      petal.style.animationDuration = (3 + Math.random() * 5) + "s";
-      petal.style.fontSize = (18 + Math.random() * 18) + "px";
+<script>
+  /* Music play */
+  const btn = document.getElementById("playBtn");
+  const music = document.getElementById("bgMusic");
 
-      document.body.appendChild(petal);
+  btn.onclick = () => {
+    music.play();
+    btn.style.display = "none";
+  };
 
-      setTimeout(() => {
-        petal.remove();
-      }, 8000);
-    }
+  /* Falling petals */
+  function createPetal() {
+    const petal = document.createElement("div");
+    petal.classList.add("petal");
+    petal.innerHTML = Math.random() > 0.5 ? "🌹" : "🤍";
 
-    setInterval(createPetal, 400);
-  </script>
+    petal.style.left = Math.random() * window.innerWidth + "px";
+    petal.style.animationDuration = (3 + Math.random() * 5) + "s";
+    petal.style.fontSize = (18 + Math.random() * 18) + "px";
+
+    document.body.appendChild(petal);
+
+    setTimeout(() => {
+      petal.remove();
+    }, 8000);
+  }
+
+  setInterval(createPetal, 400);
+</script>
 
 </body>
 </html>
